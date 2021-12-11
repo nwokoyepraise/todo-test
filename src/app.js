@@ -5,9 +5,14 @@ const server = require('http').createServer(app);
 require('./config/mongo_config')();
 
 const home = require('./routes/home');
+const todo = require('./routes/todo');
+
+//use and set express middleware
+app.use(express.json({ limit: '20kb' }));
 
 //load routes
 app.use('/', home);
+app.use('/api/todo', todo)
 
 
 
