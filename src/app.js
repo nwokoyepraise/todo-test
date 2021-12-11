@@ -6,7 +6,8 @@ require('./config/mongo_config')();
 
 const home = require('./routes/home');
 
-app.use('/', home)
+//load routes
+app.use('/', home);
 
 
 

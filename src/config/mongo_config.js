@@ -1,6 +1,7 @@
-require('dotenv').config();
+require('dotenv').config({path: 'src/.env'});
 const mongoose = require('mongoose');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@todocluster0.gdvj9.mongodb.net/tododb?retryWrites=true&w=majority`;
+console.log('process.env.DB_USER: ', process.env.DB_USER);
 
 
 const connect = async () => {
