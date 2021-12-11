@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port_number = process.env.PORT_NUMBER || 3000;
+const port_number = process.env.PORT || 5000;
 const server = require('http').createServer(app);
 require('./config/mongo_config')();
 
