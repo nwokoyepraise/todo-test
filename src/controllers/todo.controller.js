@@ -23,15 +23,19 @@ module.exports.update_todo_details = async function (body) {
             description = body.description,
             title = body.title;
 
+        //get todo from db
         let res1 = await todo.get_todo(todo_id);
 
+        //return if todo is not found
         if (!res1 || !res1._id) {
             return { status: false, status_code: 404, message: "todo not found" }
         }
 
+        //return if user is not owner of todo
         if (res1.user_id !== user_id) {
             return { status: false, status_code: 406, message: "user is not owner of todo" }
         }
+
         //update todo
         let data = await todo.update_todo_details(todo_id, title, description);
 
@@ -48,19 +52,24 @@ module.exports.update_todo_status = async function (body) {
             todo_id = body.todo_id,
             status = body.status?.toLowerCase();
 
+        //return if status is invalid
         if (status !== 'new' && status !== 'pending' && status !== 'done') {
             return { status: false, status_code: 406, message: "status invalid" }
         }
 
+        //get todo from db
         let res1 = await todo.get_todo(todo_id);
 
+        //return if todo is not found
         if (!res1 || !res1._id) {
             return { status: false, status_code: 404, message: "todo not found" }
         }
 
+        //return if user is not owner of todo
         if (res1.user_id !== user_id) {
             return { status: false, status_code: 401, message: "user is not owner of todo" }
         }
+
         //update todo
         let data = await todo.update_todo_status(todo_id, status);
 
@@ -76,12 +85,15 @@ module.exports.delete_todo = async function (body) {
         let user_id = body.user_id,
             todo_id = body.todo_id;
 
+        //get todo from db
         let res1 = await todo.get_todo(todo_id);
 
+        //return if todo is not found
         if (!res1 || !res1._id) {
             return { status: false, status_code: 404, message: "todo not found" }
         }
 
+        //return if user is not owner of todo
         if (res1.user_id !== user_id) {
             return { status: false, status_code: 406, message: "user is not owner of todo" }
         }
@@ -105,7 +117,7 @@ module.exports.get_all = async function (query) {
         let user_id = query.user_id,
             page = Number(query.page) || 0;
 
-        let data = await todo.get_todo_all(page)
+        let data = await todo.get_todo_all(page, user_id)
 
         return { status: true, data: data };
     } catch (error) {

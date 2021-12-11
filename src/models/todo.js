@@ -32,9 +32,9 @@ module.exports.get_todo = async function (_id) {
     }
 }
 
-module.exports.get_todo_all = async function (page) {
+module.exports.get_todo_all = async function (page, user_id) {
     try {
-        return await todo_model.find({},{}, { skip: page * 10, limit: 10 }).lean();
+        return await todo_model.find({ user_id: user_id }, {}, { skip: page * 10, limit: 10 }).lean();
     } catch (error) {
         console.error(error);
     }
