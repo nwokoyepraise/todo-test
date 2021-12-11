@@ -30,4 +30,33 @@ router.put('/update/details', async function (req, res, next) {
     }
 });
 
+router.put('/update/status', async function (req, res, next) {
+    try {
+        let body = req.body;
+
+        let data = await todo_controller.update_todo_status(body);
+        
+        //revert response to user
+        base_response.send_response(res, data);
+
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.delete('/delete', async function (req, res, next) {
+    try {
+        let body = req.body;
+
+        let data = await todo_controller.delete_todo(body);
+        
+        //revert response to user
+        base_response.send_response(res, data);
+
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+
 module.exports = router;
