@@ -32,6 +32,14 @@ module.exports.get_todo = async function (_id) {
     }
 }
 
+module.exports.get_todo_all = async function (page) {
+    try {
+        return await todo_model.find({},{}, { skip: page * 10, limit: 10 }).lean();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports.delete_todo = async function (_id) {
     try {
         return await todo_model.deleteOne({ _id: _id }).lean();

@@ -88,13 +88,26 @@ module.exports.delete_todo = async function (body) {
 
         //delete todo
         let data = await todo.delete_todo(todo_id);
-        console.log('data: ', data);
 
         if (data.deletedCount != 1) {
             return { status: false, status_code: 500, message: "Oops! Can't delete todo at this moment..." }
         }
 
         return { status: true, data: { message: 'success' } };
+    } catch (error) {
+        console.error(error);
+        return { status: false, status_code: 500, message: "Oops! Can't delete todo at this moment..." }
+    }
+}
+
+module.exports.get_all = async function (query) {
+    try {
+        let user_id = query.user_id,
+            page = Number(query.page) || 0;
+
+        let data = await todo.get_todo_all(page)
+
+        return { status: true, data: data };
     } catch (error) {
         console.error(error);
         return { status: false, status_code: 500, message: "Oops! Can't update todo at this moment..." }

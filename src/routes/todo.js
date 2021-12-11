@@ -58,5 +58,19 @@ router.delete('/delete', async function (req, res, next) {
     }
 });
 
+router.get('/get_all', async function (req, res, next) {
+    try {
+        let query = req.query;
+
+        let data = await todo_controller.get_all(query);
+        
+        //revert response to user
+        base_response.send_response(res, data);
+
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 
 module.exports = router;
